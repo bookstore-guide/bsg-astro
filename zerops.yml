@@ -59,6 +59,7 @@ zerops:
 
       envVariables:
         PUBLIC_API_URL: https://nodejs-168e-3000.prg1.zerops.app
+        BSG_BASE_URL: https://nodejs-168e-3000.prg1.zerops.app
 
       # *optional*: which files / folders
       # to cache for the next build run
