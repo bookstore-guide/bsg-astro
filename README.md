@@ -7,4 +7,6 @@ A list of every bookstore in San Francisco. Monolith with static Front End, CMS,
 
 [Live site](https://bookstore.guide)
 
-.
+### TODO:
+
+- [ ] upgrade prisma and unpin vscode from old version

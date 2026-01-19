@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import type { Trait } from '@prisma/client';
+import type { PlaceType, Trait } from '@prisma/client';
 import prisma from '../../../../lib/prisma';
 import { auth } from '../../../../lib/auth';
 import { createSlug } from '../../../../shared/utils';
@@ -21,6 +21,11 @@ export const GET: APIRoute = async ({ params }) => {
     where: { id: Number(id) },
     include: {
       traits: {
+        where: {
+          active: true
+        }
+      },
+      placetypes: {
         where: {
           active: true
         }
@@ -59,7 +64,12 @@ export const PUT: APIRoute = async ({ request, params }) => {
         connect: body.traits.map((trait: Trait) => ({
           id: trait.id
         }))
-      }
+      },
+      placetypes:{
+        connect: body.placetypes.map((type: PlaceType) => ({
+          id: type.id
+        }))
+      },
     },
     update: {
       name: body.name,
@@ -80,6 +90,12 @@ export const PUT: APIRoute = async ({ request, params }) => {
         set: [],
         connect: body.traits.map((trait: Trait) => ({
           id: trait.id
+        }))
+      },
+      placetypes: {
+        set: [],
+        connect: body.placetypes.map((type: PlaceType) => ({
+          id: type.id
         }))
       }
     },
@@ -106,12 +122,22 @@ export const DELETE: APIRoute = async ({ request, params }) => {
     }
   });
 
+  const placeTypesToDisconnect = prisma.place.update({
+    where: {
+      id
+    },
+    data: {
+      placetypes: { set: [] }
+    }
+  });
+
   const deletedPlace = prisma.place.delete({
     where: {
       id
     }
   });
-  await prisma.$transaction([placeTraitsToDisconnect, deletedPlace]);
+  
+  await prisma.$transaction([placeTraitsToDisconnect, placeTypesToDisconnect, deletedPlace]);
 
   return new Response(JSON.stringify(deletedPlace), {
     headers: { 'Content-Type': 'application/json' }
