@@ -2,7 +2,7 @@ interface TraitCheckBoxProps {
   id: number | string;
   changeHandler: (event: React.FormEvent<HTMLInputElement>) => void;
   isChecked: boolean;
-  name: string;
+  name: string | null;
 }
 
 const TraitCheckBox: React.FunctionComponent<TraitCheckBoxProps> = (props: TraitCheckBoxProps) => {
