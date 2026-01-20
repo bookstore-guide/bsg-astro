@@ -2,7 +2,7 @@ interface TraitCheckBoxProps {
   id: number | string;
   changeHandler: (event: React.FormEvent<HTMLInputElement>) => void;
   isChecked: boolean;
-  name: string | null; // this should not accept null. fix after prisma update/replacement
+  name: string;
 }
 
 const TraitCheckBox: React.FunctionComponent<TraitCheckBoxProps> = (props: TraitCheckBoxProps) => {
