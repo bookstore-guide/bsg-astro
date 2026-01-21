@@ -1,5 +1,5 @@
 // types defined here are modifications of Prisma types for use on the API and FE
-import type { Place as PrismaPlace, Trait as PrismaTrait, PlaceType as PrismaPlaceType } from '@prisma/client';
+import type { Place as PrismaPlace, Trait as PrismaTrait, PlaceType as PrismaPlaceType } from '../../prisma/generated/prisma/client';
 
 type DatabaseGenerated = 'createdAt' | 'updatedAt';
 
