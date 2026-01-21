@@ -21,7 +21,8 @@ const connection = {
     warning: (info: unknown) => {
       console.warn('PrismaAdapterWarning', info);
     }
-  }
+  },
+  allowPublicKeyRetrieval: true
 };
 
 const adapter = new PrismaMariaDb(connection);
