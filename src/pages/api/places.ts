@@ -35,7 +35,7 @@ export const GET: APIRoute = async () => {
     }
   });
 
-  console.error(places);
+  console.error('****************************', places);
 
   const sortedPlaces = preSortPlaces(places);
 
