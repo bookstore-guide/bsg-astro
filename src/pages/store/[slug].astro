@@ -9,7 +9,7 @@ export const prerender = true;
 
 export const getStaticPaths = async () => {
   const response = await fetch(import.meta.env.PUBLIC_API_URL + '/api/places');
-
+  console.error(response);
   const stores: Store[] = await response.json();
   return stores.map((store) => ({
     params: {
