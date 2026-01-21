@@ -7,13 +7,22 @@ const connection = {
   user: import.meta.env.DATABASE_USER,
   password: import.meta.env.DATABASE_PASSWORD,
   database: import.meta.env.DATABASE_NAME,
-  connectionLimit: 1,
-  ssl: { rejectUnauthorized: false }
+  ssl: { rejectUnauthorized: false },
+  logger: {
+    network: (info) => {
+      console.log('PrismaAdapterNetwork', info);
+    },
+    query: (info) => {
+      console.log('PrismaAdapterQuery', info);
+    },
+    error: (error) => {
+      console.error('PrismaAdapterError', error);
+    },
+    warning: (info) => {
+      console.warn('PrismaAdapterWarning', info);
+    }
+  }
 };
-
-console.error(connection);
-
-console.error('u', import.meta.env.DATABASE_URL);
 
 const adapter = new PrismaMariaDb(connection);
 
