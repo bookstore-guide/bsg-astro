@@ -9,16 +9,16 @@ const connection = {
   database: import.meta.env.DATABASE_NAME,
   ssl: { rejectUnauthorized: false },
   logger: {
-    network: (info) => {
+    network: (info: unknown) => {
       console.log('PrismaAdapterNetwork', info);
     },
-    query: (info) => {
+    query: (info: unknown) => {
       console.log('PrismaAdapterQuery', info);
     },
-    error: (error) => {
+    error: (error: unknown) => {
       console.error('PrismaAdapterError', error);
     },
-    warning: (info) => {
+    warning: (info: unknown) => {
       console.warn('PrismaAdapterWarning', info);
     }
   }
