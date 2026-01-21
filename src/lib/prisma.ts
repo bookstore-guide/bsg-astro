@@ -7,7 +7,6 @@ const connection = {
   user: import.meta.env.DATABASE_USER,
   password: import.meta.env.DATABASE_PASSWORD,
   database: import.meta.env.DATABASE_NAME,
-  ssl: { rejectUnauthorized: false },
   logger: {
     network: (info: unknown) => {
       console.log('PrismaAdapterNetwork', info);
@@ -21,9 +20,10 @@ const connection = {
     warning: (info: unknown) => {
       console.warn('PrismaAdapterWarning', info);
     }
-  },
-  allowPublicKeyRetrieval: true
+  }
 };
+
+console.error(connection);
 
 const adapter = new PrismaMariaDb(connection);
 
