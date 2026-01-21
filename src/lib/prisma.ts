@@ -7,7 +7,8 @@ const connection = {
   user: import.meta.env.DATABASE_USER,
   password: import.meta.env.DATABASE_PASSWORD,
   database: import.meta.env.DATABASE_NAME,
-  connectionLimit: 1
+  connectionLimit: 1,
+  ssl: { rejectUnauthorized: false }
 };
 
 const adapter = new PrismaMariaDb(connection);
