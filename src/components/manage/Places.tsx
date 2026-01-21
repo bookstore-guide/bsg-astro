@@ -1,4 +1,4 @@
-import type { Place } from '@prisma/client';
+import type { Place } from '../../../prisma/generated/prisma/client';
 import SignOut from '../auth/SignOut';
 
 const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/admin/places`);

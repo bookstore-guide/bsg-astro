@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import type { PlaceType, Trait } from '@prisma/client';
+import type { PlaceType, Trait } from '../../../../../prisma/generated/prisma/client';
 import prisma from '../../../../lib/prisma';
 import { auth } from '../../../../lib/auth';
 import { createSlug } from '../../../../shared/utils';

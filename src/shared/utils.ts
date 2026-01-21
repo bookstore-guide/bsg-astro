@@ -1,4 +1,4 @@
-import type { Place } from '@prisma/client';
+import type { Place } from "../../prisma/generated/prisma/client";
 
 // sort places alphabetically by default, ignore "the"
 export const preSortPlaces = (places: Partial<Place>[]) => {
