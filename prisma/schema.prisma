@@ -1,6 +1,7 @@
 generator client {
     provider = "prisma-client"
     output   = "./generated/prisma"
+    log      = ["query", "info", "warn", "error"]
 }
 
 datasource db {
