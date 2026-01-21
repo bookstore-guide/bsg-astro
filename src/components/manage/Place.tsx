@@ -4,15 +4,23 @@ import PlaceGeoLocation from './PlaceGeoLocation';
 import TextInput from './TextInput';
 import Traits from './Traits';
 import { PLACEHOLDER_STORE } from '../../shared/consts';
-import type { PlaceWithTraits, Trait } from '../../shared/types';
+import type { PlaceType, PlaceWithTraitsAndTypes, Trait } from '../../shared/types';
+import PlaceTypes from './PlaceTypes';
 
-type PlaceEditProps = { store: PlaceWithTraits; traits: Trait[] };
+type PlaceEditProps = { store: PlaceWithTraitsAndTypes; traits: Trait[]; placetypes: PlaceType[] };
 
-const placeReducer = (place: PlaceWithTraits, updates: PlaceWithTraits): PlaceWithTraits => {
+const placeReducer = (
+  place: PlaceWithTraitsAndTypes,
+  updates: PlaceWithTraitsAndTypes
+): PlaceWithTraitsAndTypes => {
   return { ...place, ...updates };
 };
 
-const Place: React.FunctionComponent<PlaceEditProps> = ({ store, traits }: PlaceEditProps) => {
+const Place: React.FunctionComponent<PlaceEditProps> = ({
+  store,
+  traits,
+  placetypes
+}: PlaceEditProps) => {
   const [place, setPlace] = useReducer(placeReducer, {
     ...PLACEHOLDER_STORE,
     id: store.id
@@ -75,6 +83,21 @@ const Place: React.FunctionComponent<PlaceEditProps> = ({ store, traits }: Place
     setPlace({
       ...place,
       traits: changedTraits
+    });
+  };
+
+  const handleTypeChange = (event: React.FormEvent<HTMLInputElement>): void => {
+    const typeToAdd = placetypes.find((type) => type.id === Number(event.currentTarget.value));
+    const addChangedType = typeToAdd ? place.placetypes.concat(typeToAdd) : [];
+
+    const removeChangedType = place.placetypes.filter(
+      (t) => t.id !== Number(event.currentTarget.value)
+    );
+    const changedTypes = event.currentTarget.checked ? addChangedType : removeChangedType;
+
+    setPlace({
+      ...place,
+      placetypes: changedTypes
     });
   };
 
@@ -185,6 +208,17 @@ const Place: React.FunctionComponent<PlaceEditProps> = ({ store, traits }: Place
               zip={place.zip5}
               handleGeoLocationChange={handleGeoLocationChange}
               onChange={handleInputChange}
+            />
+          </div>
+        </details>
+
+        <details className="clear-both  border-2 border-slate-500 p-0 mt-5 collapse collapse-plus max-w-xl">
+          <summary className="collapse-title  font-bold">Type</summary>
+          <div className="collapse-content">
+            <PlaceTypes
+              placeTypes={place.placetypes}
+              serverPlaceTypes={placetypes}
+              onChangeHandler={handleTypeChange}
             />
           </div>
         </details>

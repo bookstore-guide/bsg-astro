@@ -2,6 +2,7 @@ export const PLACEHOLDER_STORE = {
   id: 0,
   active: false,
   traits: [],
+  placetypes: [],
   name: null,
   address1: null,
   address2: null,

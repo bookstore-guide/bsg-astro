@@ -1,15 +1,17 @@
 ---
 import AdminLayout from '../../../layouts/admin.astro';
 import Place from '../../../components/manage/Place';
-import type { Trait } from '../../../shared/types';
+import type { PlaceType, Trait } from '../../../shared/types';
 
 const { id } = Astro.params;
 const response = await fetch(import.meta.env.PUBLIC_API_URL + '/api/admin/place/' + id);
 const store = await response.json();
 const traitResponse = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/admin/traits`);
 const traits: Trait[] = await traitResponse.json();
+const placeTypeResponse = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/admin/types`);
+const placetypes: PlaceType[] = await placeTypeResponse.json();
 ---
 
 <AdminLayout title={`Edit ${store.name}`}>
-  <Place store={store} traits={traits} client:load />
+  <Place store={store} traits={traits} placetypes={placetypes} client:load />
 </AdminLayout>
