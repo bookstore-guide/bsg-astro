@@ -11,6 +11,8 @@ const connection = {
   ssl: { rejectUnauthorized: false }
 };
 
+console.error(connection);
+
 const adapter = new PrismaMariaDb(connection);
 
 const prisma = new PrismaClient({
