@@ -8,7 +8,7 @@ const response = await fetch(import.meta.env.PUBLIC_API_URL + '/api/admin/place/
 const store = await response.json();
 const traitResponse = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/admin/traits`);
 const traits: Trait[] = await traitResponse.json();
-const placeTypeResponse = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/admin/types`);
+const placeTypeResponse = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/admin/placetypes`);
 const placetypes: PlaceType[] = await placeTypeResponse.json();
 ---
 
