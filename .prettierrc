@@ -4,5 +4,14 @@
   "printWidth": 100,
   "singleQuote": true,
   "trailingComma": "none",
-  "bracketSameLine": true
+  "bracketSameLine": true,
+  "plugins": ["prettier-plugin-astro"],
+  "overrides": [
+    {
+      "files": "*.astro",
+      "options": {
+        "parser": "astro"
+      }
+    }
+  ]
 }

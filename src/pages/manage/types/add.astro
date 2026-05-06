@@ -1,0 +1,17 @@
+---
+import AdminLayout from '../../../layouts/admin.astro';
+import TaxonomyEdit from '../../../components/manage/TaxonomyEdit';
+
+export const prerender = false;
+const placeholder = { id: 0, name: '', description: '', internalNotes: '', active: true };
+---
+
+<AdminLayout title="Add Type">
+  <TaxonomyEdit
+    item={placeholder}
+    apiBase="/api/admin/placetype"
+    listPath="/manage/types"
+    entityLabel="Type"
+    client:load
+  />
+</AdminLayout>

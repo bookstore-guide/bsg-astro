@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../../layouts/base.astro';
+import StoreListing from '../../components/frontend/StoreListing.astro';
+import FilterBar from '../../components/frontend/FilterBar.astro';
+import StoreCount from '../../components/frontend/StoreCount.astro';
+import SiteFooter from '../../components/frontend/SiteFooter.astro';
+import { getCachedPlaces } from '../../lib/place-cache';
+import { createSlug } from '../../shared/utils';
+import type { Store } from '../../shared/types';
+
+export const prerender = false;
+
+const { tag } = Astro.params;
+const places = await getCachedPlaces();
+
+const filteredByTag = places.filter((p) =>
+  p.traits.some((t) => t.name && createSlug(t.name) === tag)
+);
+const stores = filteredByTag as unknown as Store[];
+
+if (stores.length === 0) {
+  return new Response(null, { status: 404, statusText: 'Not Found' });
+}
+
+const traitName =
+  places.flatMap((p) => p.traits).find((t) => t.name && createSlug(t.name) === tag)?.name ??
+  String(tag);
+
+// Types: only those present in stores that have this tag
+const availableTypes = [...new Set(
+  filteredByTag.flatMap((p) => p.placetypes.map((t) => t.name)).filter(Boolean)
+)].sort((a, b) => a!.localeCompare(b!)).map((name) => ({ name: name! }));
+
+// Traits: all traits across all stores (no type constraint active)
+const allTraits = [...new Set(
+  places.flatMap((p) => p.traits.map((t) => t.name)).filter(Boolean)
+)].sort((a, b) => a!.localeCompare(b!)).map((name) => ({ name: name! }));
+---
+
+<BaseLayout
+  canonical={`https://bookstore.guide/tag/${tag}/`}
+  description={`San Francisco bookstores with ${traitName} at bookstore.guide.`}
+  title={`${traitName} — San Francisco Bookstore Guide`}>
+  <hgroup>
+    <p>San Francisco</p>
+    <h1>Bookstore Guide</h1>
+  </hgroup>
+  <FilterBar allTypes={availableTypes} allTraits={allTraits} currentTag={String(tag)} />
+  <StoreCount count={stores.length} />
+  <div class="container">
+    {
+      stores.map((store) => (
+        <div class="content">
+          <a href={`${import.meta.env.BSG_BASE_URL}/store/${store.slug}`} class="name-link">
+            {store.name}
+          </a>
+          <StoreListing store={store} description={store.description} />
+        </div>
+      ))
+    }
+  </div>
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  hgroup p {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    margin-bottom: -0.75rem;
+  }
+
+  hgroup h1 {
+    margin: 0;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    hgroup h1 {
+      font-size: 3.75rem;
+      line-height: 1;
+    }
+  }
+
+  .name-link {
+    color: oklch(0.270224 0.027505 257.526);
+    font-size: 1.125em;
+    font-weight: 500;
+    margin-bottom: 0px;
+  }
+
+  .container {
+    column-gap: 1rem;
+    display: grid;
+    max-width: 96vw;
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      max-width: 56rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

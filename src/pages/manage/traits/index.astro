@@ -1,0 +1,41 @@
+---
+import AdminLayout from '../../../layouts/admin.astro';
+import type { Trait } from '../../../shared/types';
+
+export const prerender = false;
+const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/admin/traits`);
+const traits: Trait[] = await response.json();
+---
+
+<AdminLayout title="Manage Traits">
+  <div class="text-sm breadcrumbs">
+    <ul>
+      <li><a href="/manage">Admin</a></li>
+      <li>Traits</li>
+    </ul>
+  </div>
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="text-2xl font-bold">Traits</h1>
+    <a href="/manage/traits/add" class="btn btn-warning">Add Trait</a>
+  </div>
+  <table class="table w-full max-w-xl">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Active</th>
+        <th>Exclude</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {traits.map((t) => (
+        <tr>
+          <td>{t.name}</td>
+          <td>{t.active ? 'Yes' : 'No'}</td>
+          <td>{t.exclude ? 'Yes' : 'No'}</td>
+          <td><a href={`/manage/traits/${t.id}`} class="btn btn-sm btn-ghost">Edit</a></td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</AdminLayout>

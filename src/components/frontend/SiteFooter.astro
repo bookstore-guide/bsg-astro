@@ -2,14 +2,14 @@
 const { current } = Astro.props;
 ---
 
-<div class="nav">
+<nav aria-label="Site">
   {current !== 'Home' && <a href={`${import.meta.env.BSG_BASE_URL}`}>Home</a>}
-  {current !== 'Home' && current !== 'About' && <span>-</span>}
+  {current !== 'Home' && current !== 'About' && <span aria-hidden="true"> - </span>}
   {current !== 'About' && <a href={`${import.meta.env.BSG_BASE_URL}/about`}>About</a>}
-</div>
+</nav>
 
 <style>
-  .nav a {
+  nav a {
     color: rgba(30, 39, 52, 0.8);
     font-weight: 800;
   }

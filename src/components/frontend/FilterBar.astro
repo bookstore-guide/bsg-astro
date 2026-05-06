@@ -1,0 +1,132 @@
+---
+import { createSlug } from '../../shared/utils';
+
+interface FilterItem {
+  name: string;
+}
+
+interface Props {
+  allTypes: FilterItem[];
+  allTraits: FilterItem[];
+  currentType?: string;
+  currentTag?: string;
+}
+
+const { allTypes, allTraits, currentType, currentTag } = Astro.props;
+
+function typeHref(slug: string): string {
+  if (slug === currentType) {
+    return currentTag ? `/tag/${currentTag}` : '/';
+  }
+  return currentTag ? `/type/${slug}/${currentTag}` : `/type/${slug}`;
+}
+
+function traitHref(slug: string): string {
+  if (slug === currentTag) {
+    return currentType ? `/type/${currentType}` : '/';
+  }
+  return currentType ? `/type/${currentType}/${slug}` : `/tag/${slug}`;
+}
+---
+
+{allTypes.length > 0 && (
+  <div class="types">
+    {allTypes.map((t) => {
+      const slug = createSlug(t.name);
+      return (
+        <a class={`type-tag${slug === currentType ? ' type-tag--active' : ''}`} href={typeHref(slug)} aria-current={slug === currentType ? 'true' : undefined}>
+          {t.name}
+        </a>
+      );
+    })}
+  </div>
+)}
+<div class="tags">
+  {allTraits.map((t) => {
+    const slug = createSlug(t.name);
+    return (
+      <a class={`tag${slug === currentTag ? ' tag--active' : ''}`} href={traitHref(slug)} aria-current={slug === currentTag ? 'true' : undefined}>
+        {t.name}
+      </a>
+    );
+  })}
+</div>
+
+<style>
+  div.types {
+    margin-top: 0.75rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .type-tag {
+    display: inline-block;
+    border: 1px solid oklch(0.144788 0 0);
+    padding: 3px 8px;
+    font-size: 1rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.25rem;
+    box-sizing: border-box;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: oklch(0.909962 0.008747 17.3174);
+    color: oklch(0 0 0);
+    transition: opacity 60ms ease;
+  }
+
+  .type-tag--active {
+    background-color: oklch(0.144788 0 0);
+    color: oklch(1 0 0);
+  }
+
+  .type-tag:hover {
+    background-color: oklch(0.144788 0 0);
+    color: oklch(1 0 0);
+  }
+
+  .type-tag:active {
+    opacity: 0.6;
+  }
+
+  .type-tag:focus-visible {
+    outline: 2px solid oklch(0.144788 0 0);
+    outline-offset: 2px;
+  }
+
+  div.tags {
+    margin-top: 0.5rem;
+  }
+
+  .tag {
+    display: inline-block;
+    border: 1px solid oklch(0.144788 0 0);
+    padding: 1px 4px;
+    font-size: 0.875rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.25rem;
+    box-sizing: border-box;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: oklch(0.909962 0.008747 17.3174);
+    color: oklch(0 0 0);
+    transition: opacity 60ms ease;
+  }
+
+  .tag--active {
+    background-color: oklch(0.144788 0 0);
+    color: oklch(1 0 0);
+  }
+
+  .tag:hover {
+    background-color: oklch(0.144788 0 0);
+    color: oklch(1 0 0);
+  }
+
+  .tag:active {
+    opacity: 0.6;
+  }
+
+  .tag:focus-visible {
+    outline: 2px solid oklch(0.144788 0 0);
+    outline-offset: 2px;
+  }
+</style>

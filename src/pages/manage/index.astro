@@ -4,5 +4,10 @@ import Places from '../../components/manage/Places';
 ---
 
 <AdminLayout title="Admin">
+  <div class="flex gap-3 mb-6">
+    <a href="/manage/types" class="btn btn-outline btn-sm">Types</a>
+    <a href="/manage/traits" class="btn btn-outline btn-sm">Traits</a>
+    <a href="/manage/neighborhoods" class="btn btn-outline btn-sm">Neighborhoods</a>
+  </div>
   <Places client:only="react" />
 </AdminLayout>

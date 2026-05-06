@@ -3,11 +3,17 @@ import DescriptionCounter from './DescriptionCounter';
 import PlaceGeoLocation from './PlaceGeoLocation';
 import TextInput from './TextInput';
 import Traits from './Traits';
+import Neighborhoods from './Neighborhoods';
 import { PLACEHOLDER_STORE } from '../../shared/consts';
-import type { PlaceType, PlaceWithTraitsAndTypes, Trait } from '../../shared/types';
+import type { Neighborhood, PlaceType, PlaceWithTraitsAndTypes, Trait } from '../../shared/types';
 import PlaceTypes from './PlaceTypes';
 
-type PlaceEditProps = { store: PlaceWithTraitsAndTypes; traits: Trait[]; placetypes: PlaceType[] };
+type PlaceEditProps = {
+  store: PlaceWithTraitsAndTypes;
+  traits: Trait[];
+  placetypes: PlaceType[];
+  neighborhoods: Neighborhood[];
+};
 
 const placeReducer = (
   place: PlaceWithTraitsAndTypes,
@@ -19,7 +25,8 @@ const placeReducer = (
 const Place: React.FunctionComponent<PlaceEditProps> = ({
   store,
   traits,
-  placetypes
+  placetypes,
+  neighborhoods
 }: PlaceEditProps) => {
   const [place, setPlace] = useReducer(placeReducer, {
     ...PLACEHOLDER_STORE,
@@ -98,6 +105,18 @@ const Place: React.FunctionComponent<PlaceEditProps> = ({
     setPlace({
       ...place,
       placetypes: changedTypes
+    });
+  };
+
+  const handleNeighborhoodChange = (event: React.FormEvent<HTMLInputElement>): void => {
+    const toAdd = neighborhoods.find((n) => n.id === Number(event.currentTarget.value));
+    const added = toAdd ? place.neighborhoods.concat(toAdd) : [];
+    const removed = place.neighborhoods.filter(
+      (n) => n.id !== Number(event.currentTarget.value)
+    );
+    setPlace({
+      ...place,
+      neighborhoods: event.currentTarget.checked ? added : removed
     });
   };
 
@@ -219,6 +238,17 @@ const Place: React.FunctionComponent<PlaceEditProps> = ({
               placeTypes={place.placetypes}
               serverPlaceTypes={placetypes}
               onChangeHandler={handleTypeChange}
+            />
+          </div>
+        </details>
+
+        <details className="clear-both  border-2 border-slate-500 p-0 mt-5 collapse collapse-plus max-w-xl">
+          <summary className="collapse-title  font-bold">Neighborhood</summary>
+          <div className="collapse-content">
+            <Neighborhoods
+              neighborhoods={place.neighborhoods}
+              serverNeighborhoods={neighborhoods}
+              onChangeHandler={handleNeighborhoodChange}
             />
           </div>
         </details>

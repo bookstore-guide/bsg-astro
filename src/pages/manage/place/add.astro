@@ -2,7 +2,7 @@
 import AdminLayout from '../../../layouts/admin.astro';
 import Place from '../../../components/manage/Place';
 import { PLACEHOLDER_STORE } from '../../../shared/consts';
-import type { PlaceType, Trait } from '../../../shared/types';
+import type { Neighborhood, PlaceType, Trait } from '../../../shared/types';
 
 export const prerender = false;
 const traitResponse = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/admin/traits`);
@@ -10,8 +10,11 @@ const traits: Trait[] = await traitResponse.json();
 
 const placeTypeResponse = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/admin/placetypes`);
 const placetypes: PlaceType[] = await placeTypeResponse.json();
+
+const neighborhoodResponse = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/admin/neighborhoods`);
+const neighborhoods: Neighborhood[] = await neighborhoodResponse.json();
 ---
 
 <AdminLayout title="Add a Place">
-  <Place store={PLACEHOLDER_STORE} traits={traits} placetypes={placetypes} client:load />
+  <Place store={PLACEHOLDER_STORE} traits={traits} placetypes={placetypes} neighborhoods={neighborhoods} client:load />
 </AdminLayout>

@@ -1,0 +1,39 @@
+---
+import AdminLayout from '../../../layouts/admin.astro';
+import type { Neighborhood } from '../../../shared/types';
+
+export const prerender = false;
+const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/admin/neighborhoods`);
+const neighborhoods: Neighborhood[] = await response.json();
+---
+
+<AdminLayout title="Manage Neighborhoods">
+  <div class="text-sm breadcrumbs">
+    <ul>
+      <li><a href="/manage">Admin</a></li>
+      <li>Neighborhoods</li>
+    </ul>
+  </div>
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="text-2xl font-bold">Neighborhoods</h1>
+    <a href="/manage/neighborhoods/add" class="btn btn-warning">Add Neighborhood</a>
+  </div>
+  <table class="table w-full max-w-xl">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Active</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {neighborhoods.map((n) => (
+        <tr>
+          <td>{n.name}</td>
+          <td>{n.active ? 'Yes' : 'No'}</td>
+          <td><a href={`/manage/neighborhoods/${n.id}`} class="btn btn-sm btn-ghost">Edit</a></td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</AdminLayout>

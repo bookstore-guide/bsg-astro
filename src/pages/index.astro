@@ -2,13 +2,21 @@
 import type { Store } from '../shared/types';
 import BaseLayout from '../layouts/base.astro';
 import StoreListing from '../components/frontend/StoreListing.astro';
+import FilterBar from '../components/frontend/FilterBar.astro';
+import StoreCount from '../components/frontend/StoreCount.astro';
 import SiteFooter from '../components/frontend/SiteFooter.astro';
+import { getCachedPlaces } from '../lib/place-cache';
 
-export const prerender = true;
+const places = await getCachedPlaces();
+const stores = places as unknown as Store[];
 
-const response = await fetch(import.meta.env.PUBLIC_API_URL + '/api/places');
+const allTypes = [...new Set(
+  places.flatMap((p) => p.placetypes.map((t) => t.name)).filter(Boolean)
+)].sort((a, b) => a!.localeCompare(b!)).map((name) => ({ name: name! }));
 
-const stores: Store[] = await response.json();
+const allTraits = [...new Set(
+  places.flatMap((p) => p.traits.map((t) => t.name)).filter(Boolean)
+)].sort((a, b) => a!.localeCompare(b!)).map((name) => ({ name: name! }));
 ---
 
 <BaseLayout
@@ -19,6 +27,8 @@ const stores: Store[] = await response.json();
     <p>San Francisco</p>
     <h1>Bookstore Guide</h1>
   </hgroup>
+  <FilterBar allTypes={allTypes} allTraits={allTraits} />
+  <StoreCount count={stores.length} />
   <div class="container">
     {
       stores.map((store) => (
@@ -69,6 +79,7 @@ const stores: Store[] = await response.json();
     display: grid;
     max-width: 96vw;
   }
+
   @media (min-width: 1024px) {
     .container {
       max-width: 56rem;

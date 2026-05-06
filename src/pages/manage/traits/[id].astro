@@ -1,0 +1,21 @@
+---
+import AdminLayout from '../../../layouts/admin.astro';
+import TaxonomyEdit from '../../../components/manage/TaxonomyEdit';
+import type { Trait } from '../../../shared/types';
+
+export const prerender = false;
+const { id } = Astro.params;
+const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/admin/trait/${id}`);
+const item: Trait = await response.json();
+---
+
+<AdminLayout title={`Edit ${item.name}`}>
+  <TaxonomyEdit
+    item={item}
+    apiBase="/api/admin/trait"
+    listPath="/manage/traits"
+    entityLabel="Trait"
+    showExclude={true}
+    client:load
+  />
+</AdminLayout>

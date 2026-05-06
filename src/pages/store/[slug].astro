@@ -4,21 +4,17 @@ import StoreListing from '../../components/frontend/StoreListing.astro';
 import StoreTags from '../../components/frontend/StoreTags.astro';
 import SiteFooter from '../../components/frontend/SiteFooter.astro';
 import type { Store } from '../../shared/types';
+import { getCachedPlaces } from '../../lib/place-cache';
 
-export const prerender = true;
+export const prerender = false;
 
-export const getStaticPaths = async () => {
-  const response = await fetch(import.meta.env.PUBLIC_API_URL + '/api/places');
+const { slug } = Astro.params;
+const places = await getCachedPlaces();
+const store = places.find((p) => p.slug === slug) as unknown as Store | undefined;
 
-  const stores: Store[] = await response.json();
-  return stores.map((store) => ({
-    params: {
-      slug: store.slug
-    },
-    props: { store: store }
-  }));
-};
-const { store } = Astro.props;
+if (!store) {
+  return new Response(null, { status: 404, statusText: 'Not Found' });
+}
 
 const description = store.longDescription || store.description;
 const metaDescription =
