@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import prisma from '../../../lib/prisma';
-import { requireAuth, jsonError } from '../../../lib/api-utils';
+import { jsonError } from '../../../lib/api-utils';
 
 export const prerender = false;
 

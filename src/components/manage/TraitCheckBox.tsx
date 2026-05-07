@@ -1,6 +1,6 @@
 interface TraitCheckBoxProps {
   id: number | string;
-  changeHandler: (event: React.FormEvent<HTMLInputElement>) => void;
+  changeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isChecked: boolean;
   name: string | null; // @todo: this should not accept null. fix after prisma update/replacement
 }

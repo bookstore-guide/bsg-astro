@@ -4,7 +4,7 @@ import TraitCheckBox from './TraitCheckBox';
 interface NeighborhoodsProps {
   neighborhoods: Neighborhood[];
   serverNeighborhoods: Neighborhood[];
-  onChangeHandler: (event: React.FormEvent<HTMLInputElement>) => void;
+  onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Neighborhoods: React.FunctionComponent<NeighborhoodsProps> = (

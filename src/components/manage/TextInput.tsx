@@ -3,7 +3,7 @@ interface TextInputProps {
   name: string | null;
   placeholder?: string;
   value: string | null;
-  onChange: (event: React.FormEvent<HTMLInputElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 const textInputStyle = 'input input-bordered input-primary w-full mb-3 mt-3 input-sm';
 

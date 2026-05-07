@@ -54,7 +54,7 @@ const Place: React.FunctionComponent<PlaceEditProps> = ({
     }
   };
 
-  const handleCheckBoxChange = (event: React.FormEvent<HTMLInputElement>): void => {
+  const handleCheckBoxChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setPlace({
       ...place,
       [event.currentTarget.name]: event.currentTarget.checked
@@ -62,7 +62,7 @@ const Place: React.FunctionComponent<PlaceEditProps> = ({
   };
 
   const handleInputChange = (
-    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ): void => {
     setPlace({
       ...place,
@@ -78,7 +78,7 @@ const Place: React.FunctionComponent<PlaceEditProps> = ({
     });
   };
 
-  const handleTraitChange = (event: React.FormEvent<HTMLInputElement>): void => {
+  const handleTraitChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const traitToAdd = traits.find((trait) => trait.id === Number(event.currentTarget.value));
     const addChangedTrait = traitToAdd ? place.traits.concat(traitToAdd) : [];
 
@@ -93,7 +93,7 @@ const Place: React.FunctionComponent<PlaceEditProps> = ({
     });
   };
 
-  const handleTypeChange = (event: React.FormEvent<HTMLInputElement>): void => {
+  const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const typeToAdd = placetypes.find((type) => type.id === Number(event.currentTarget.value));
     const addChangedType = typeToAdd ? place.placetypes.concat(typeToAdd) : [];
 
@@ -108,7 +108,7 @@ const Place: React.FunctionComponent<PlaceEditProps> = ({
     });
   };
 
-  const handleNeighborhoodChange = (event: React.FormEvent<HTMLInputElement>): void => {
+  const handleNeighborhoodChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const toAdd = neighborhoods.find((n) => n.id === Number(event.currentTarget.value));
     const added = toAdd ? place.neighborhoods.concat(toAdd) : [];
     const removed = place.neighborhoods.filter(

@@ -4,7 +4,7 @@ import TraitCheckBox from './TraitCheckBox';
 interface PlaceTypeProps {
   placeTypes: PlaceType[];
   serverPlaceTypes: PlaceType[];
-  onChangeHandler: (event: React.FormEvent<HTMLInputElement>) => void;
+  onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const PlaceTypes: React.FunctionComponent<PlaceTypeProps> = (props: PlaceTypeProps) => {

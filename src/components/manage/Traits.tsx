@@ -4,7 +4,7 @@ import TraitCheckBox from './TraitCheckBox';
 interface TraitsProps {
   traits: Trait[];
   servertraits: Trait[];
-  onChangeHandler: (event: React.FormEvent<HTMLInputElement>) => void;
+  onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Traits: React.FunctionComponent<TraitsProps> = (props: TraitsProps) => {

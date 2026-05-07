@@ -32,12 +32,12 @@ const TaxonomyEdit: React.FunctionComponent<TaxonomyEditProps> = ({
   }, [item]);
 
   const handleChange = (
-    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
     setState({ ...state, [event.currentTarget.name]: event.currentTarget.value });
   };
 
-  const handleCheckbox = (event: React.FormEvent<HTMLInputElement>): void => {
+  const handleCheckbox = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setState({ ...state, [event.currentTarget.name]: event.currentTarget.checked });
   };
 

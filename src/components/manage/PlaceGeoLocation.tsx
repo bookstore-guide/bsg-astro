@@ -6,7 +6,7 @@ interface PlaceGeoLocationProps {
   lng?: number | string | null;
   zip?: string | null;
   handleGeoLocationChange: (lat: number, lng: number) => void;
-  onChange: (event: React.FormEvent<HTMLInputElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const PlaceGeoLocation: React.FunctionComponent<PlaceGeoLocationProps> = (
