@@ -27,7 +27,7 @@ zerops:
       # container be based on, can be extended
       # in `run.prepareCommands` using
       # `sudo zsc install nodejs@20`
-      base: nodejs@22
+      base: nodejs@24
 
       # what ports your app listens on
       # and whether it supports http traffic

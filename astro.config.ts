@@ -1,7 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import aiRobotsTxt from 'astro-ai-robots-txt';
-import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -12,12 +11,6 @@ export default defineConfig({
   site: 'https://bookstore.guide',
   integrations: [
     aiRobotsTxt(),
-    sitemap({
-      filter: (page) =>
-        !page.startsWith('https://bookstore.guide/auth') &&
-        !page.startsWith('https://bookstore.guide/api') &&
-        !page.startsWith('https://bookstore.guide/manage')
-    }),
     react()
   ],
   server: { host: true, port: 3000 },
