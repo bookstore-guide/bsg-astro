@@ -63,7 +63,6 @@ a.external-link {
   text-decoration: underline;
   overflow: hidden;
   white-space: nowrap;
-  display: block;
   text-overflow: ellipsis;
 }
 
