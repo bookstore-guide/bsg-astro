@@ -64,6 +64,11 @@ a.external-link {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  /* inline elements ignore overflow/text-overflow; inline-block makes the
+     ellipsis take effect when a URL is still too long for its card */
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: bottom;
 }
 
 div.content {
